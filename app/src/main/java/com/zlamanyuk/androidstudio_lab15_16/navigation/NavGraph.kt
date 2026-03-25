@@ -30,7 +30,8 @@ fun StudentPlannerNavHost(
                 onSettingsClick = {
 
                     navController.navigate(Screen.Settings.route)
-                })
+                }
+            )
         }
         composable(
             route = Screen.Details.route,
