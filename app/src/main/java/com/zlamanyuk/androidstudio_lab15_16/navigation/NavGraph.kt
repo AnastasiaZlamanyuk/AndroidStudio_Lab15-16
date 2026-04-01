@@ -30,7 +30,8 @@ fun StudentPlannerNavHost(
                 onSettingsClick = {
 
                     navController.navigate(Screen.Settings.route)
-                }
+                },
+                onTimingClick = { navController.navigate(Screen.Timing.route) }
             )
         }
         composable(
@@ -57,6 +58,30 @@ fun StudentPlannerNavHost(
         }
         composable(route = Screen.Settings.route) {
             SettingsScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        composable(route = Screen.Timing.route) {
+            TimingScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onTimingItemClick = { timingId ->
+                    navController.navigate(Screen.TimingDetails.createRoute(timingId))
+                }
+            )
+        }
+        composable(
+            route = Screen.TimingDetails.route,
+            arguments = listOf(
+                navArgument("timingId") {
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
+            val timingId = backStackEntry.arguments?.getString("timingId") ?: ""
+            TimingDetailScreen(
+                timingId = timingId,
                 onNavigateBack = {
                     navController.popBackStack()
                 }
